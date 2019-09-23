@@ -178,6 +178,10 @@ class BaseMatrixGraph:
     def from_hmm(cls, model, labels):
         pass
 
+    @classmethod
+    def from_networkx(cls, networkx, labels):
+        pass
+
 
 class TransGraph(BaseMatrixGraph):
     def draw(self, ax=None, r=1, nodelabels=True, edgelabels=False, edgecolors=None,

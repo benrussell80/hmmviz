@@ -1,18 +1,18 @@
 # hmmviz
 A package for visualizing state transition graphs from hidden Markov models or other models.
 
-This package is meant to serve as an out-of-the-box means of plotting small graphs (less than 10 nodes).
+This package is meant to serve as an out-of-the-box means of plotting small graphs (less than 10 nodes) in a customizable way.
 
 ## Installation
     pip install hmmviz
 
 ## Usage
-### Plotting a Transition Matrix from a Markov Process
-The `TransGraph` takes a pandas DataFrame with states indices and columns and transition probabilities (from index to column)
+Each graph object takes a pandas DataFrame with states indices and columns and transition probabilities (from index to column). However, these can be instantiated using different data structures such as numpy arrays, networkx graphs, etc. (**help needed**) via the appropriate class methods.
 as values.
 
+### Plotting a Transition Matrix from a Markov Process
 ```python
-import hmmviz as hv
+from hmmviz import TransGraph
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -28,7 +28,7 @@ T = pd.crosstab(
 # rainy       0.5    0.5
 # sunny       0.4    0.6
 
-graph = hv.TransGraph(T)
+graph = TransGraph(T)
 
 # looks best on square figures/axes
 fig = plt.figure(figsize=(6, 6))
@@ -44,7 +44,7 @@ If we want to make the graph more colorful and informative we can pass some para
 
 ```python
 # same T as before
-graph = hv.TransGraph(T)
+graph = TransGraph(T)
 
 fig = plt.figure(figsize=(6, 6))
 

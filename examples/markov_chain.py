@@ -1,4 +1,4 @@
-import hmmviz as hv
+from hmmviz import TransGraph
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -14,7 +14,7 @@ T = pd.crosstab(
 # rainy       0.5    0.5
 # sunny       0.4    0.6
 
-graph = hv.TransGraph(T)
+graph = TransGraph(T)
 
 fig = plt.figure(figsize=(6, 6))
 
