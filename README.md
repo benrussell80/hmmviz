@@ -39,7 +39,9 @@ plt.show()
 ```
 
 This will make an all black graph with labels on the nodes but none on the edges.
-![](https://raw.githubusercontent.com/benrussell80/hmmviz/master/images/basic_graph.png | width=100)
+
+<img src="https://raw.githubusercontent.com/benrussell80/hmmviz/master/images/basic_graph.png" width="480">
+
 If we want to make the graph more colorful and informative we can pass some parameters into the graph's draw method.
 
 ```python
@@ -58,4 +60,5 @@ graph.draw(
 
 plt.show()
 ```
-![](https://raw.githubusercontent.com/benrussell80/hmmviz/master/images/colorful_graph.png | width=100)
+
+<img src="https://raw.githubusercontent.com/benrussell80/hmmviz/master/images/colorful_graph.png" width="480">
