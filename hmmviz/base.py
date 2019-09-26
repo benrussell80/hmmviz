@@ -157,30 +157,44 @@ class GraphNode:
 
 
 class BaseMatrixGraph:
-    def __init__(self, dataframe: pd.DataFrame, ax=None):
-        self.ax = ax
+    def __init__(self, dataframe: pd.DataFrame):
         self.states = dataframe.index.tolist()
         self.dataframe = dataframe
+
+    def __str__(self):
+        return str(self.dataframe)
         
     @classmethod
-    def from_array(cls, T, labels):
-        pass
+    def from_array(cls, T, labels, **kwargs):
+        dataframe = pd.DataFrame(T, columns=labels, index=labels)
+        return cls(dataframe, **kwargs)
 
     @classmethod
-    def from_dict(cls, d):
-        pass
+    def from_dict(cls, d, labels):
+        dataframe = pd.DataFrame(columns=labels)
+        for i, j in product(labels, repeat=2):
+            dataframe.loc[i, j] = d.get((i, j), 0)
+
+        return cls(dataframe)
+
+    # @classmethod
+    # def from_sparse(cls, csr_matrix, labels):
+    #     pass
 
     @classmethod
-    def from_sparse(cls, csr_matrix, labels):
-        pass
+    def from_hmm(cls, model, labels, **kwargs):
+        dataframe = pd.DataFrame(model.transmat_, columns=labels, index=labels)
+        return cls(dataframe, **kwargs)
 
     @classmethod
-    def from_hmm(cls, model, labels):
-        pass
+    def from_networkx(cls, graph, edge_param='weight', **kwargs):
+        labels = graph.nodes
+        dataframe = pd.DataFrame(columns=labels)
+        for u, v, d in graph.edges(data=True):
+            dataframe.loc[u, v] = d[edge_param]
 
-    @classmethod
-    def from_networkx(cls, networkx, labels):
-        pass
+        dataframe.fillna(0, inplace=True)
+        return cls(dataframe, **kwargs)
 
 
 class TransGraph(BaseMatrixGraph):
@@ -189,7 +203,7 @@ class TransGraph(BaseMatrixGraph):
              edgelabelformat='{2:.2f}', rot=0, selfloops=True, fontname='DejaVu Sans', edgefontsize=10,
              nodefontsize=10):
         
-        self.ax = ax or self.ax or plt.gca()
+        ax = ax or plt.gca()
         
         if nodes is True:
             nodes = self.dataframe.index.tolist() + [col for col in self.dataframe.columns if col not in self.dataframe.index]
@@ -240,7 +254,7 @@ class TransGraph(BaseMatrixGraph):
 
         # draw nodes
         for n, a in zip(nodes, angles):
-            node = GraphNode(a, ax=self.ax, r=r, nodecolor=nodecolors.get(n, 'k'),
+            node = GraphNode(a, ax=ax, r=r, nodecolor=nodecolors.get(n, 'k'),
                              nodelabel=nodelabels.get(n), fontname=fontname, fontsize=nodefontsize)
             node.draw()
 
@@ -252,7 +266,7 @@ class TransGraph(BaseMatrixGraph):
             value = self.dataframe.loc[n1, n2]
 
             params = {
-                'ax': self.ax,
+                'ax': ax,
                 'edgewidth': edgewidths[(n1, n2)],
                 'edgecolor': edgecolors.get((n1, n2), 'k'),
                 'label': edgelabels.get((n1, n2)),
@@ -291,6 +305,6 @@ class TransGraph(BaseMatrixGraph):
             arrow.draw()
 
         lim = 1.4 ** 2 * r
-        self.ax.set_xlim([-lim, lim])
-        self.ax.set_ylim([-lim, lim])
-        self.ax.axis('off')
+        ax.set_xlim([-lim, lim])
+        ax.set_ylim([-lim, lim])
+        ax.axis('off')

@@ -62,3 +62,25 @@ plt.show()
 ```
 
 <img src="https://raw.githubusercontent.com/benrussell80/hmmviz/master/images/colorful_graph.png" width="480">
+
+hmmviz really shines for graphs with 4 or 5 nodes. For larger graphs consider using a package like nxviz.
+
+```python
+import numpy as np
+
+arr = np.ones((4, 4)) * 0.25
+
+labels = ['s0', 's1', 's2', 's3']
+
+graph = TransGraph.from_array(arr, labels)
+
+colors = {f's{i}': f'C{i}' for i in range(4)}
+
+plt.figure(figsize=(6, 6))
+
+graph.draw(edgecolors=colors, nodecolors=colors, nodelabels=False, edgewidths=2)
+
+plt.show()
+```
+
+<img src="https://raw.githubusercontent.com/benrussell80/hmmviz/master/images/four_node_graph.png" width="480">
