@@ -4,6 +4,7 @@ A package for visualizing state transition graphs from hidden Markov models or o
 This package is meant to serve as an out-of-the-box means of plotting small graphs (less than 10 nodes) in a customizable way.
 
 ## Installation
+Developed with Python 3.6
     pip install hmmviz
 
 ## Usage
