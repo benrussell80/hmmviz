@@ -5,6 +5,7 @@ This package is meant to serve as an out-of-the-box means of plotting small grap
 
 ## Installation
 Developed with Python 3.6
+
     pip install hmmviz
 
 ## Usage
