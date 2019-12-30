@@ -8,7 +8,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as fh:
 
 setup(
     name='hmmviz',
-    version='0.0.6',
+    version='0.0.7',
     author='Benjamin Russell',
     description='A package for visualizing state transition graphs from hidden Markov models or other models.',
     long_description=long_description,
